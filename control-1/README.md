@@ -2,43 +2,69 @@
 
 ## Bubble Sort
 
-### Pior Caso 
-- O pior caso ocorre quando o array está ordenado de forma decrescente.
-- Neste caso, o algoritmo precisará percorrer o array inteiro e fazer o máximo número de trocas possíveis, o que implica que cada elemento é comparado com todos os outros.
-- A cada iteração do laço externo, uma comparação é feita para cada elemento no laço interno.
-- Isso resulta em uma complexidade de tempo de `O(n²)`.
+### Peor Caso 
+- El peor caso ocurre cuando el arreglo está ordenado de forma decreciente.
+- En este caso, el algoritmo deberá recorrer todo el arreglo y hacer el máximo número de intercambios posibles, lo que implica que cada elemento se compara con todos los demás.
+- En cada iteración del bucle externo, se realiza una comparación para cada elemento en el bucle interno.
+- Esto resulta en una complejidad temporal de `O(n²)`.
 
-### Melhor Caso
+### Mejor Caso
 
-- O melhor caso ocorre quando o array já está ordenado.
-- O algoritmo ainda executa os dois laços, mas, se o array estiver ordenado, ele não precisa fazer nenhuma troca.
-- Mesmo tendo que percorrer o array inteiro, o algoritmo não faz nenhuma troca, resultando em uma complexidade de tempo de `O(n)`.
+- El mejor caso ocurre cuando el arreglo ya está ordenado.
+- El algoritmo todavía ejecuta los dos bucles, pero si el arreglo está ordenado, no necesita hacer ningún intercambio.
+- Aunque recorra todo el arreglo, el algoritmo no realiza ningún intercambio, resultando en una complejidad temporal de `O(n)`.
 
-## Insertation Sort
+## Insertion Sort
 
-### Pior Caso
-- O pior caso ocorre quando o array está em ordem decrescente. Neste caso, para cada novo elemento, o laço `while` terá que percorrer toda a parte ordenada (até o início do array) para encontrar o lugar correto de inserção.
-- O número de comparações e trocas no pior caso é dado pela soma dos primeiros `n-1` números inteiros.
-- A complexidade de tempo do pior caso é `O(n²)`.
+### Peor Caso
+- El peor caso ocurre cuando el arreglo está en orden decreciente. En este caso, para cada nuevo elemento, el bucle `while` tendrá que recorrer toda la parte ordenada (hasta el inicio del arreglo) para encontrar el lugar correcto de inserción.
+- El número de comparaciones e intercambios en el peor caso es dado por la suma de los primeros `n-1` números enteros.
+- La complejidad temporal del peor caso es `O(n²)`.
 
+### Mejor Caso
 
-### Melhor Caso
-
-- O melhor caso para o Insertion Sort ocorre quando o array já está ordenado.
-- Nesse caso, o laço `while` nunca é executado, pois `array[j]` nunca será maior que `key`. O algoritmo simplesmente percorre o array sem fazer trocas.
-- Nesse cenário, o algoritmo executa `n-1` comparações, uma vez para cada iteração do laço externo, resultando em uma complexidade de tempo de `O(n)`.
-
+- El mejor caso para el Insertion Sort ocurre cuando el arreglo ya está ordenado.
+- En este caso, el bucle `while` nunca se ejecuta, ya que `array[j]` nunca será mayor que `key`. El algoritmo simplemente recorre el arreglo sin hacer intercambios.
+- En este escenario, el algoritmo realiza `n-1` comparaciones, una por cada iteración del bucle externo, resultando en una complejidad temporal de `O(n)`.
 
 ## Selection Sort
 
-## Pior Caso
+### Peor Caso
 
-- O pior caso ocorre quando o array está em qualquer estado (inclusive desordenado), pois o algoritmo sempre faz o mesmo número de comparações.
-- Para cada iteração do array (ou seja, para cada posição `i`), o algoritmo precisa fazer uma varredura no restante do array (da posição `i+1` até `n`).
-- No primeiro ciclo, são feitas `n-1` comparações, no segundo ciclo são feitas `n-2` comparações, e assim por diante, até que restam apenas 1 comparação.
+- El peor caso ocurre cuando el arreglo está en cualquier estado (incluso desordenado), ya que el algoritmo siempre realiza el mismo número de comparaciones.
+- Para cada iteración del arreglo (es decir, para cada posición `i`), el algoritmo necesita hacer una revisión en el resto del arreglo (desde la posición `i+1` hasta `n`).
+- En el primer ciclo, se hacen `n-1` comparaciones, en el segundo ciclo se hacen `n-2` comparaciones, y así sucesivamente, hasta que solo queda 1 comparación.
 
-## Melhor Caso
+### Mejor Caso
 
-- O melhor caso também tem complexidade `O(n²)`. Mesmo que o array já esteja ordenado, o algoritmo sempre percorre o restante do array para encontrar o menor elemento, o que significa que ele não pode ser otimizado para parar mais cedo.
-- Assim como no pior caso, serão feitas `𝑛(𝑛−1)/2` comparações, independentemente da ordenação inicial do array.
+- El mejor caso también tiene complejidad `O(n²)`. Incluso si el arreglo ya está ordenado, el algoritmo siempre recorre el resto del arreglo para encontrar el elemento más pequeño, lo que significa que no puede ser optimizado para detenerse antes.
+- Al igual que en el peor caso, se harán `𝑛(𝑛−1)/2` comparaciones, independientemente del estado inicial del arreglo.
 
+## Búsqueda Binaria
+
+### Peor Caso
+
+- En el peor caso, el valor buscado no está presente en el arreglo. En cada iteración, la búsqueda binaria reduce a la mitad el tamaño del intervalo de búsqueda. Si el arreglo tiene `n` elementos, el número de veces que podemos dividir el arreglo a la mitad hasta que el intervalo de búsqueda se vacíe es proporcional al logaritmo de n en base 2.
+- Por lo tanto, en el peor caso, la complejidad temporal de la búsqueda binaria es `O(log n)`, porque en cada iteración descartamos la mitad del arreglo y el número máximo de divisiones hasta que no queden más elementos es `log_2(n)`.
+
+### Mejor Caso
+
+- En el mejor caso, el elemento buscado está exactamente en el medio del arreglo en el primer intento. En este escenario, encontramos el elemento en la primera comparación, resultando en solo una iteración. Sin embargo, en términos de notación asintótica, aunque el mejor caso se encuentre en la primera comparación, la complejidad sigue siendo `O(log n)`, ya que esto se considera en el crecimiento de la función conforme aumenta el tamaño del arreglo.
+
+## Counting Sort
+
+### Peor Caso
+- El **peor caso** para el Counting Sort depende de dos factores:
+  - `n`, el número de elementos en el arreglo de entrada.
+  - `k`, el valor máximo en el arreglo (`max`).
+- La complejidad temporal para cada parte del algoritmo:
+  1. **Conteo de elementos**: El primer bucle recorre el arreglo de tamaño `n`, por lo tanto, la complejidad es **O(n)**.
+  2. **Acumulación de los conteos**: El segundo bucle recorre el arreglo `count[]` de tamaño `max + 1`, por lo que la complejidad es **O(k)**.
+  3. **Construcción del arreglo ordenado**: El tercer bucle también recorre el arreglo de tamaño `n`, con complejidad **O(n)**.
+  4. **Copia de vuelta al arreglo original**: Este bucle final también recorre el arreglo de tamaño `n`, con complejidad **O(n)**.
+
+Por lo tanto, el tiempo total de ejecución es la suma de las dos partes dominantes, resultando en una complejidad de **O(n + k)**.
+
+### Mejor Caso
+- En el **mejor caso**, el Counting Sort se comporta de la misma manera. Esto se debe a que el algoritmo no realiza optimizaciones basadas en la entrada ya ordenada, como lo hacen otros algoritmos de ordenación.
+- Aún necesita recorrer el arreglo de entrada para contar los elementos, acumular los conteos y construir el arreglo final. Por lo tanto, el **mejor caso** también tiene complejidad **O(n + k)**.
