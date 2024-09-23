@@ -2,23 +2,21 @@
 #define LIBRO_H
 
 #pragma once
-#include <iostream>
-#include <string>
 #include <MaterialBibliografico.h>
+#include <iostream>
 
 using namespace std;
 
 class Libro : public MaterialBibliografico {
     private:
         string fechaPublicacion;
-        string resume;
+        string resumen;
 
     public:
-        Libro(std::string nombre, std::string isbn, std::string autor, std::string fechaPublicacion, std::string resumen);
+        Libro(string nombre, string isbn, string autor, string fechaPublicacion, string resumen);
         ~Libro();
 
         void mostrarInformacion() const override;
 };
-
 
 #endif //LIBRO_H
