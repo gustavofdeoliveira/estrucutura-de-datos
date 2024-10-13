@@ -6,32 +6,38 @@
 #include <string>
 using namespace std;
 
-class MaterialBibliografico{
-  //atributos de la classe
-  protected:
-    string nombre;
-    string isbn;
-    string autor;
-    bool prestado;
-  public:
-    //Constructor
-    MaterialBibliografico(string nombre, string isbn, string autor);
+class MaterialBibliografico {
+// Attributes
+protected:
+  string nombre;
+  string isbn;
+  string autor;
+  bool prestado;
 
-    //Metodos
-    virtual void mostrarInformacion() const = 0;
-    bool estaPrestado() const;
-    void prestar();
-    void devolver();
+public:
+  //Construct
+  MaterialBibliografico(string nombre, string isbn, string autor);
 
-    //Getters
-    string getNombre();
-    string getAutor();
+  //Deconstruct
+  virtual ~MaterialBibliografico() {
+  };
 
-    //Setters
-    string setNombre(string nombre);
-    string setAutor(string autor);
+  //Methods
+  virtual void mostrarInformacion() const = 0;
 
-    //Descontructor
-    ~MaterialBibliografico();
+  bool isPrestado();
+
+  void setPrestado(bool estado);
+
+
+  //Getters
+  string getNombre();
+
+  string getAutor();
+
+  //Setters
+  string setNombre(string nombre);
+
+  string setAutor(string autor);
 };
 #endif

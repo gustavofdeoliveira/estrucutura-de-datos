@@ -8,15 +8,20 @@
 using namespace std;
 
 class Libro : public MaterialBibliografico {
-    private:
-        string fechaPublicacion;
-        string resumen;
+// Attributes
+private:
+    string fechaPublicacion;
+    string resumen;
 
-    public:
-        Libro(string nombre, string isbn, string autor, string fechaPublicacion, string resumen);
-        ~Libro();
+public:
+    //Construct
+    Libro(string nombre, string isbn, string autor, string fechaPublicacion, string resumen);
 
-        void mostrarInformacion() const override;
+    //Deconstruct
+    ~Libro();
+
+    //Methods
+    void mostrarInformacion() const override;
 };
 
 #endif //LIBRO_H

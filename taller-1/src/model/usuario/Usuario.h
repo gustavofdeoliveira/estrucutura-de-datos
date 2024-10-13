@@ -7,19 +7,26 @@ using namespace std;
 
 
 class Usuario {
+// Attributes
 private:
     string nombre;
-    string id;
-    MaterialBibliografico* material[5];
-    public:
-    Usuario(string nombre, string id);
+    int id;
+    MaterialBibliografico *materialesPrestados[5];
+
+public:
+    //Constructor
+    Usuario(string nombre, int id);
+
+    //Deconstructor
     ~Usuario();
 
-    bool pretarMaterial(MaterialBibliografico* material);
-    bool devolverMaterial(MaterialBibliografico* material);
-    void mostrarMaterialPrestados() const;
-};
+    //Methods
+    bool prestarMaterial(MaterialBibliografico *material);
 
+    bool devolverMaterial(MaterialBibliografico *material);
+
+    void mostrarMaterialesPrestados() const;
+};
 
 
 #endif //USUARIO_H

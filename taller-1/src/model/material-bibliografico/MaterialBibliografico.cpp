@@ -8,19 +8,16 @@ MaterialBibliografico::MaterialBibliografico(string nombre, string isbn, string 
     this->nombre = nombre;
     this->isbn = isbn;
     this->autor = autor;
+    this->prestado = false;
 }
 
-//Metodos
-bool MaterialBibliografico::estaPrestado() const {
-    return this -> prestado;
+//Methods
+bool MaterialBibliografico::isPrestado() {
+    return this->prestado;
 }
 
-void MaterialBibliografico::prestar() {
-    prestado = true;
-}
-
-void MaterialBibliografico::devolver() {
-    prestado = false;
+void MaterialBibliografico::setPrestado(bool estado) {
+    this->prestado = estado;
 }
 
 //Getters
@@ -34,11 +31,11 @@ string MaterialBibliografico::getAutor() {
 
 //Setters
 string MaterialBibliografico::setNombre(string nombre) {
-    this ->nombre = nombre;
+    this->nombre = nombre;
 }
 
 string MaterialBibliografico::setAutor(string autor) {
-    this -> autor = autor;
+    this->autor = autor;
 }
 
 
