@@ -2,7 +2,7 @@
 #define LIBRO_H
 
 #pragma once
-#include <MaterialBibliografico.h>
+#include "../material-bibliografico/MaterialBibliografico.h"
 #include <iostream>
 
 using namespace std;

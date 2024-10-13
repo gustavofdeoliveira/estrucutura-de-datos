@@ -2,20 +2,23 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include "Libro.h"
-#include "Revista.h"
-#include "Usuario.h"
+#include "model/libro/Libro.h"
+#include "model/revista/Revista.h"
+#include "model/usuario/Usuario.h"
+#include "model/material-bibliografico/MaterialBibliografico.h"
 
 using namespace std;
 
+// Array estáticos de tamaño limitado
 MaterialBibliografico *biblioteca[100];
 int totalMaterial = 0;
 
 vector<Usuario *> usuarios;
 
+// Funcione para agregar un libro a la biblioteca
 void agregarLibro() {
     if (totalMaterial >= 100) {
-        cout << "La biblioteca ha alcanzado su capacidad máxima de materiales." << endl;
+        cout << "La biblioteca ha alcanzado su capacidad maxima de materiales." << endl;
         return;
     }
 
@@ -27,18 +30,19 @@ void agregarLibro() {
     getline(cin, isbn);
     cout << "Ingrese el autor del libro: ";
     getline(cin, autor);
-    cout << "Ingrese la fecha de publicación: ";
+    cout << "Ingrese la fecha de publicacion: ";
     getline(cin, fechaPublicacion);
     cout << "Ingrese el resumen del libro: ";
     getline(cin, resumen);
 
     biblioteca[totalMaterial++] = new Libro(nombre, isbn, autor, fechaPublicacion, resumen);
-    cout << "Libro agregado con éxito." << endl;
+    cout << "Libro agregado con exito." << endl;
 }
 
+// Función para agregar una revista a la biblioteca
 void agregarRevista() {
     if (totalMaterial >= 100) {
-        cout << "La biblioteca ha alcanzado su capacidad máxima de materiales." << endl;
+        cout << "La biblioteca ha alcanzado su capacidad maxima de materiales." << endl;
         return;
     }
 
@@ -51,16 +55,17 @@ void agregarRevista() {
     getline(cin, isbn);
     cout << "Ingrese el autor de la revista: ";
     getline(cin, autor);
-    cout << "Ingrese el número de edición: ";
+    cout << "Ingrese el numero de edicion: ";
     cin >> numeroEdicion;
     cin.ignore();
-    cout << "Ingrese el mes de publicación: ";
+    cout << "Ingrese el mes de publicacion: ";
     getline(cin, mesPublicacion);
 
     biblioteca[totalMaterial++] = new Revista(nombre, isbn, autor, numeroEdicion, mesPublicacion);
-    cout << "Revista agregada con éxito." << endl;
+    cout << "Revista agregada con exito." << endl;
 }
 
+// Función para listar los materiales de la biblioteca
 void listarMateriales() {
     for (int i = 0; i < totalMaterial; ++i) {
         biblioteca[i]->mostrarInformacion();
@@ -68,9 +73,10 @@ void listarMateriales() {
     }
 }
 
+// Función para buscar un material en la biblioteca
 void buscarMaterial() {
     string criterio;
-    cout << "Ingrese el título o autor a buscar: ";
+    cout << "Ingrese el titulo o autor a buscar: ";
     cin.ignore();
     getline(cin, criterio);
 
@@ -83,6 +89,7 @@ void buscarMaterial() {
     }
 }
 
+// Función para buscar un usuario por su ID
 Usuario *buscarUsuario(int id) {
     for (Usuario *usuario: usuarios) {
         if (usuario->getId() == id) {
@@ -92,6 +99,7 @@ Usuario *buscarUsuario(int id) {
     return nullptr;
 }
 
+// Función para agregar un usuario a la biblioteca
 void agregarUsuario() {
     string nombre;
     int id;
@@ -110,6 +118,7 @@ void agregarUsuario() {
     cout << "Usuario agregado con éxito." << endl;
 }
 
+// Función para prestar un material a un usuario
 void prestarMaterial() {
     int idUsuario;
     cout << "Ingrese el ID del usuario que va a prestar un material: ";
@@ -137,6 +146,7 @@ void prestarMaterial() {
     cout << "Material no encontrado." << endl;
 }
 
+// Función para devolver un material prestado por un usuario
 void devolverMaterial() {
     int idUsuario;
     cout << "Ingrese el ID del usuario que va a devolver un material: ";
@@ -162,6 +172,7 @@ void devolverMaterial() {
     cout << "Material no encontrado." << endl;
 }
 
+// Función para mostrar el menú de opciones
 void mostrarMenu() {
     cout << "\n---- Biblioteca ----\n";
     cout << "1. Agregar Libro\n";
@@ -172,7 +183,7 @@ void mostrarMenu() {
     cout << "6. Prestar Material\n";
     cout << "7. Devolver Material\n";
     cout << "0. Salir\n";
-    cout << "Ingrese una opción: ";
+    cout << "Ingrese una opcion: ";
 }
 
 int main() {
@@ -208,7 +219,7 @@ int main() {
                 cout << "Saliendo del sistema." << endl;
                 break;
             default:
-                cout << "Opción no válida. Intente de nuevo." << endl;
+                cout << "Opcion no valida. Intente de nuevo." << endl;
         }
     } while (opcion != 0);
 

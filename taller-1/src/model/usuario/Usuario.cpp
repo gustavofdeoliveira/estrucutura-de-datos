@@ -37,6 +37,18 @@ bool Usuario::prestarMaterial(MaterialBibliografico *material) {
     return false;
 }
 
+void Usuario::devolverMaterial(MaterialBibliografico *material) {
+    for (int i = 0; i < 5; ++i) {
+        if (this->materialesPrestados[i] == material) {
+            this->materialesPrestados[i] = nullptr;
+            material->setPrestado(false);
+            cout << "Material devuelto con éxito." << endl;
+            return;
+        }
+    }
+    cout << "El usuario no tiene prestado ese material." << endl;
+}
+
 void Usuario::mostrarMaterialesPrestados() const {
     cout << "Materiales prestados por " << this->nombre << ":" << endl;
     for (int i = 0; i < 5; ++i) {
@@ -46,5 +58,8 @@ void Usuario::mostrarMaterialesPrestados() const {
     }
 }
 
+int Usuario::getId() const {
+    return this->id;
+}
 
 

@@ -1,7 +1,7 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
-#include "MaterialBibliografico.h"
+#include "../material-bibliografico/MaterialBibliografico.h"
 
 using namespace std;
 
@@ -23,9 +23,11 @@ public:
     //Methods
     bool prestarMaterial(MaterialBibliografico *material);
 
-    bool devolverMaterial(MaterialBibliografico *material);
+    void devolverMaterial(MaterialBibliografico *material);
 
     void mostrarMaterialesPrestados() const;
+
+    int getId() const;
 };
 
 

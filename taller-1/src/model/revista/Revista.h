@@ -1,7 +1,7 @@
 #ifndef REVISTA_H
 #define REVISTA_H
 
-#include "MaterialBibliografico.h"
+#include "../material-bibliografico/MaterialBibliografico.h"
 
 using namespace std;
 
