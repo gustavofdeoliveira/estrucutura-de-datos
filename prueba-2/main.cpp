@@ -61,17 +61,17 @@ int main() {
 
     // Inicializa el tablero y la matriz de visitados
     bool exito = false;
-    vector<vector<int>> tablero(tamanoTablero, vector<int>(tamanoTablero, 0));
+    vector<vector<int>> tablero(tamanoTablero, vector<int>(tamanoTablero, cero));
     vector<vector<bool>> visitado(tamanoTablero, vector<bool>(tamanoTablero, false));
     vector<pair<int, int>> camino; // Almacena el camino recorrido
 
     // Ejecuta la función DFS para resolver el problema
-    dfs(coordinarX, coordinarY, tamanoTablero, 1, tablero, visitado, exito, camino);
+    dfs(coordinarX, coordinarY, tamanoTablero, uno, tablero, visitado, exito, camino);
 
     // Muestra la solución formateada
     if (exito) {
         cout << "Output: ";
-        for (size_t i = 0; i < camino.size(); i++) {
+        for (size_t i = cero; i < camino.size(); i++) {
             cout << "(" << camino[i].first << ", " << camino[i].second << ")";
             if (i < camino.size() - uno) {
                 cout << " -> ";
