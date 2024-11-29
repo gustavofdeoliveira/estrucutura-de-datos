@@ -1,6 +1,6 @@
 # Prueba 2
 
-## Alumnos
+## Alumno
 - **Nombre:** Gustavo Ferreira de Oliveira
 - **RUT:** 400162816
 
