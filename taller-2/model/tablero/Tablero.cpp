@@ -38,7 +38,7 @@ char Tablero::verificarGanador() const {
         return tablero[cero][cero];
     if (tablero[cero][dos] != ' ' && tablero[cero][dos] == tablero[uno][uno] && tablero[uno][uno] == tablero[dos][cero])
         return tablero[cero][dos];
-    return estaLleno() ? 'E' : ' '; // 'E' para empate
+    return estaLleno() ? 'E' : ' ';
 }
 
 vector<pair<int, int>> Tablero::obtenerCoordenadasDisponibles() const {

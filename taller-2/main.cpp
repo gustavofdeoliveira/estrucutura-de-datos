@@ -1,7 +1,6 @@
 #include "./model/tablero/Tablero.h"
 #include "./model/minimax/Minimax.h"
 #include <iostream>
-#include <chrono>
 
 using namespace std;
 
@@ -9,27 +8,55 @@ int main() {
     Tablero tablero;
     Minimax minimax;
 
-    cout << "Bem-vindo ao Jogo da Velha!\n";
-    tablero.mostrar();
+    cout << "Bienvenido al Juego del Gato!" << endl;
 
+    // Menu de selección de algoritmo
+    int opcion = 0;
+    bool mostrarMenu = true;
+
+    do {
+        cout << "\nElija el tipo de algoritmo: " << endl;
+        cout << "1 - Algoritmo Minimax con Poda" << endl;
+        cout << "2 - Algoritmo Minimax sin Poda" << endl;
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                cout << "Seleccionaste Minimax con Poda." << endl;
+                mostrarMenu = false;
+                break;
+            case 2:
+                cout << "Seleccionaste Minimax sin Poda." << endl;
+                mostrarMenu = false;
+                break;
+            default:
+                cout << "Opción inválida, por favor intenta nuevamente." << endl;
+        }
+    } while (mostrarMenu);
+
+    tablero.mostrar();
     char jugadorActual = 'X';
 
+    // Loop principal del juego
     while (tablero.verificarGanador() == ' ' && !tablero.estaLleno()) {
         int fila, columna;
         if (jugadorActual == 'X') {
-            cout << "Sua vez (X)!" << endl;
-            cout << "Insira linha (0-2): " << endl;
+            cout << "Es tu turno (X)!" << endl;
+            cout << "Ingresa la fila (0-2): " << endl;
             cin >> fila;
-            cout << "Insira coluna (0-2): " << endl;
+            cout << "Ingresa la columna (0-2): " << endl;
             cin >> columna;
 
             if (!tablero.realizarMovimiento(fila, columna, jugadorActual)) {
-                cout << "Movimento inválido. Tente novamente.\n";
+                cout << "Movimiento inválido. Inténtalo de nuevo.\n";
                 continue;
             }
         } else {
-            cout << "Turno da IA (O)...\n";
-            auto movimiento = minimax.encontrarMejorMovimientoComPoda(tablero, jugadorActual);
+            cout << "Turno de la IA (O)...\n";
+            auto movimiento = (opcion == 1)
+                ? minimax.encontrarMejorMovimientoComPoda(tablero, jugadorActual)
+                : minimax.encontrarMejorMovimientoSinPoda(tablero, jugadorActual);
+
             tablero.realizarMovimiento(movimiento.first, movimiento.second, jugadorActual);
         }
 
@@ -41,7 +68,7 @@ int main() {
     if (ganador == 'E')
         cout << "Empate!\n";
     else
-        cout << "O vencedor é " << ganador << "!\n";
+        cout << "El ganador es " << ganador << "!\n";
 
     return 0;
 }

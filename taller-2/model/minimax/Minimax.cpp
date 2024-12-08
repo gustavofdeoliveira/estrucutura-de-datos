@@ -1,10 +1,13 @@
 #include "Minimax.h"
-#include <iostream>
 #include <vector>
 #include <limits>
+#include <chrono>
+#include <iostream>
 
 using namespace std;
+using namespace chrono;
 
+// Evalúa el estado del tablero para un jugador específico.
 int Minimax::evaluar(const Tablero& tablero, char jugador) {
     char ganador = tablero.verificarGanador();
     if (ganador == jugador) return 1;
@@ -12,6 +15,7 @@ int Minimax::evaluar(const Tablero& tablero, char jugador) {
     return 0;
 }
 
+// Construye el árbol de posibilidades con profundidad definida
 void Minimax::construirArbol(Nodo& nodo, const Tablero& estado, int profundidad) {
     if (profundidad == 0 || estado.verificarGanador() != ' ') return;
 
@@ -27,7 +31,8 @@ void Minimax::construirArbol(Nodo& nodo, const Tablero& estado, int profundidad)
     }
 }
 
-int Minimax::minimax(Nodo& nodo, const Tablero& estado, int profundidad, bool esMaximizador) {
+// Implementa el algoritmo minimax sin poda alfa-beta
+int Minimax::minimaxSinPoda(Nodo& nodo, const Tablero& estado, int profundidad, bool esMaximizador) {
     if (profundidad == 0 || estado.verificarGanador() != ' ') {
         return evaluar(estado, nodo.jugador);
     }
@@ -40,7 +45,7 @@ int Minimax::minimax(Nodo& nodo, const Tablero& estado, int profundidad, bool es
         nuevoEstado.realizarMovimiento(coordenada.first, coordenada.second, nodo.jugador);
 
         Nodo nuevoNodo(coordenadas, nodo.jugador == 'X' ? 'O' : 'X');
-        int puntuacion = minimax(nuevoNodo, nuevoEstado, profundidad - 1, !esMaximizador);
+        int puntuacion = minimaxSinPoda(nuevoNodo, nuevoEstado, profundidad - 1, !esMaximizador);
 
         if (esMaximizador) {
             mejorPuntuacion = max(mejorPuntuacion, puntuacion);
@@ -52,6 +57,7 @@ int Minimax::minimax(Nodo& nodo, const Tablero& estado, int profundidad, bool es
     return mejorPuntuacion;
 }
 
+// Implementa el algoritmo minimax con poda alfa-beta
 int Minimax::minimaxComPoda(Nodo& nodo, const Tablero& estado, int profundidad, bool esMaximizador, int alfa, int beta) {
     if (profundidad == 0 || estado.verificarGanador() != ' ') {
         return evaluar(estado, nodo.jugador);
@@ -81,17 +87,20 @@ int Minimax::minimaxComPoda(Nodo& nodo, const Tablero& estado, int profundidad, 
     return mejorPuntuacion;
 }
 
+// Encuentra el mejor movimiento sin poda alfa-beta y mide el tiempo de ejecución.
 pair<int, int> Minimax::encontrarMejorMovimientoSinPoda(Tablero& tablero, char jugador) {
     Nodo nodo(tablero.obtenerCoordenadasDisponibles(), jugador);
     int mejorPuntuacion = numeric_limits<int>::min();
     pair<int, int> mejorMovimiento;
+
+    auto inicio = high_resolution_clock::now();
 
     for (const auto& coordenada : nodo.cordenadasDisponibles) {
         Tablero nuevoEstado = tablero;
         nuevoEstado.realizarMovimiento(coordenada.first, coordenada.second, jugador);
 
         Nodo nuevoNodo(nodo.cordenadasDisponibles, jugador == 'X' ? 'O' : 'X');
-        int puntuacion = minimax(nuevoNodo, nuevoEstado, 3, false); // Limite de profundidade 3
+        int puntuacion = minimaxSinPoda(nuevoNodo, nuevoEstado, 3, false); // Limite de profundidade 3
 
         if (puntuacion > mejorPuntuacion) {
             mejorPuntuacion = puntuacion;
@@ -99,15 +108,23 @@ pair<int, int> Minimax::encontrarMejorMovimientoSinPoda(Tablero& tablero, char j
         }
     }
 
+    auto fin = high_resolution_clock::now();
+    auto duracion = duration_cast<milliseconds>(fin - inicio);
+    cout << "Tiempo de ejecucion (sin poda): " << duracion.count() << " ms\n";
+    cout << "<==========================>" << endl;
+
     return mejorMovimiento;
 }
 
+// Encuentra el mejor movimiento con poda alfa-beta y mide el tiempo de ejecución.
 pair<int, int> Minimax::encontrarMejorMovimientoComPoda(Tablero& tablero, char jugador) {
     Nodo nodo(tablero.obtenerCoordenadasDisponibles(), jugador);
     int mejorPuntuacion = numeric_limits<int>::min();
     pair<int, int> mejorMovimiento;
     int alfa = numeric_limits<int>::min();
     int beta = numeric_limits<int>::max();
+
+    auto inicio = high_resolution_clock::now();
 
     for (const auto& coordenada : nodo.cordenadasDisponibles) {
         Tablero nuevoEstado = tablero;
@@ -121,6 +138,11 @@ pair<int, int> Minimax::encontrarMejorMovimientoComPoda(Tablero& tablero, char j
             mejorMovimiento = coordenada;
         }
     }
+
+    auto fin = high_resolution_clock::now();
+    auto duracion = duration_cast<milliseconds>(fin - inicio);
+    cout << "Tiempo de ejecucion (con poda): " << duracion.count() << " ms\n";
+    cout << "<==========================>" << endl;
 
     return mejorMovimiento;
 }
