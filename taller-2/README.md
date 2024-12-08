@@ -90,8 +90,6 @@ Este enfoque es más eficiente en términos computacionales, especialmente en ju
     - **Caso de uso:**
         - Se utiliza principalmente en implementaciones iniciales o cuando el árbol de juego tiene un factor de ramificación bajo y poca profundidad.
 
-Dado a estrutura de seus arquivos no diretório que você enviou, o comando deve ser ajustado para refletir a hierarquia de pastas e os caminhos corretos. Considerando que você tem diretórios específicos para os arquivos `Nodo`, `Tablero`, `Minimax`, e seus respectivos `.cpp` e `.h`, você deve ajustar os caminhos relativos na hora de compilar.
-
 ## **Explicaciones sobre el algoritmo utilizado**
 
 En esta sección, se analiza en detalle el uso del algoritmo **Minimax**, con y sin **poda alfa-beta**, en el contexto del **Juego del Gato**. Exploramos su funcionamiento, implementación y cómo las optimizaciones impactan en el tiempo de ejecución.
