@@ -90,51 +90,191 @@ Este enfoque es más eficiente en términos computacionales, especialmente en ju
     - **Caso de uso:**
         - Se utiliza principalmente en implementaciones iniciales o cuando el árbol de juego tiene un factor de ramificación bajo y poca profundidad.
 
-## **Explicaciones sobre el algoritmo utilizado**
+### **Explicación detallada del código y ejemplos**
 
-En esta sección, se analiza en detalle el uso del algoritmo **Minimax**, con y sin **poda alfa-beta**, en el contexto del **Juego del Gato**. Exploramos su funcionamiento, implementación y cómo las optimizaciones impactan en el tiempo de ejecución.
+El código presentado implementa el algoritmo **Minimax** para el juego del Tic-Tac-Toe, tanto con como sin la optimización de poda alfa-beta. A continuación, se detalla cómo funciona cada parte del código con ejemplos prácticos para comprender su comportamiento.
 
-### **Principios generales del algoritmo Minimax**
+---
 
-El algoritmo **Minimax** es ampliamente utilizado en juegos de dos jugadores alternos que buscan:
-- **Maximizar** el puntaje del jugador activo (`X`).
-- **Minimizar** las posibilidades de éxito del oponente (`O`).
+### **1. Evaluar el estado del tablero**
+La función `evaluar` determina el puntaje del tablero en función del ganador. Esto es esencial para que el algoritmo minimax identifique qué movimientos son mejores.
 
-En un tablero como el del Tic-Tac-Toe, el algoritmo evalúa exhaustivamente todas las combinaciones posibles de movimientos desde el estado inicial hasta un estado terminal (victoria, empate o derrota). Este proceso genera un árbol de decisiones, donde:
-- El **Maximizador (`X`)** selecciona el movimiento con el mayor puntaje.
-- El **Minimizador (`O`)** selecciona el movimiento con el menor puntaje.
+```cpp
+int Minimax::evaluar(const Tablero& tablero, char jugador) {
+    char ganador = tablero.verificarGanador();
+    if (ganador == jugador) return 1;         // Ganó el jugador actual.
+    if (ganador == 'O' && jugador == 'X') return -1; // Ganó el oponente.
+    return 0;                                // Empate o no hay ganador.
+}
+```
 
-### **Minimax sin poda alfa-beta**
+#### **Ejemplo:**
+- **Tablero actual:**
+```
+X | O | X  
+O | X | O  
+O |   | X  
+```
+- **Jugador:** `X`
+- Resultado: `1` (El jugador `X` ganó).
 
-Cuando se implementa el algoritmo sin optimizaciones, se evalúan **todas** las ramas posibles del árbol de decisiones, lo que puede ser ineficiente para juegos con alta complejidad. Sin embargo, en juegos pequeños como el Tic-Tac-Toe, aún es manejable, aunque relativamente más lento.
+---
 
-#### **Ventajas:**
-- Cobertura completa de todas las posibilidades, asegurando decisiones óptimas.
+### **2. Construcción del árbol de posibilidades**
+La función `construirArbol` genera todas las posibles combinaciones de movimientos hasta una profundidad dada.
 
-#### **Desventajas:**
-- Tiempo de ejecución elevado debido a la exploración innecesaria de movimientos irrelevantes.
+```cpp
+void Minimax::construirArbol(Nodo& nodo, const Tablero& estado, int profundidad) {
+    if (profundidad == 0 || estado.verificarGanador() != ' ') return;
 
-#### **Tiempo de ejecución observado:**
-- En la ejecución sin poda, se registraron **9 ms** para calcular el siguiente movimiento.
+    auto coordenadas = estado.obtenerCoordenadasDisponibles();
+    for (const auto& coordenada : coordenadas) {
+        Tablero nuevoEstado = estado;
+        nuevoEstado.realizarMovimiento(coordenada.first, coordenada.second, nodo.jugador);
 
-![Sin poda alfa-beta](image/sin-poda.png)
+        Nodo nuevoNodo(coordenadas, nodo.jugador == 'X' ? 'O' : 'X');
+        nodo.movimientos.push_back(nuevoNodo);
 
-### **Minimax con poda alfa-beta**
+        construirArbol(nodo.movimientos.back(), nuevoEstado, profundidad - 1);
+    }
+}
+```
 
-La **poda alfa-beta** es una mejora significativa al algoritmo Minimax. Permite descartar ramas del árbol de búsqueda que no pueden mejorar el resultado actual. Utiliza dos parámetros clave:
-- **Alfa (`α`):** El mejor puntaje conocido para el Maximizador hasta el momento.
-- **Beta (`β`):** El mejor puntaje conocido para el Minimizador hasta el momento.
+#### **Ejemplo:**
+- **Estado inicial del tablero:**
+```
+X | O | X  
+O |   |  
+  |   |  
+```
+- **Movimiento disponible:** `(1, 1)`
+- El árbol generará posibles tableros con combinaciones a partir de este estado.
 
-Cuando se detecta que una rama no puede mejorar el resultado actual (cuando `β ≤ α`), se interrumpe su exploración, lo que reduce drásticamente el tiempo de ejecución.
+---
 
-#### **Ventajas:**
-- Reducción significativa del tiempo de ejecución.
-- Mantiene la calidad de las decisiones óptimas.
+### **3. Minimax sin poda alfa-beta**
+Este método explora **todas** las ramas posibles para encontrar el mejor movimiento.
 
-#### **Tiempo de ejecución observado:**
-- En la ejecución con poda alfa-beta, se registraron **2 ms**, mostrando una mejora considerable respecto al enfoque sin poda.
+```cpp
+int Minimax::minimaxSinPoda(Nodo& nodo, const Tablero& estado, int profundidad, bool esMaximizador) {
+    if (profundidad == 0 || estado.verificarGanador() != ' ') {
+        return evaluar(estado, nodo.jugador);
+    }
 
-![Con poda alfa-beta](image/con-poda.png)
+    int mejorPuntuacion = esMaximizador ? numeric_limits<int>::min() : numeric_limits<int>::max();
+    auto coordenadas = estado.obtenerCoordenadasDisponibles();
+
+    for (const auto& coordenada : coordenadas) {
+        Tablero nuevoEstado = estado;
+        nuevoEstado.realizarMovimiento(coordenada.first, coordenada.second, nodo.jugador);
+
+        Nodo nuevoNodo(coordenadas, nodo.jugador == 'X' ? 'O' : 'X');
+        int puntuacion = minimaxSinPoda(nuevoNodo, nuevoEstado, profundidad - 1, !esMaximizador);
+
+        if (esMaximizador) {
+            mejorPuntuacion = max(mejorPuntuacion, puntuacion);
+        } else {
+            mejorPuntuacion = min(mejorPuntuacion, puntuacion);
+        }
+    }
+
+    return mejorPuntuacion;
+}
+```
+
+#### **Ejemplo:**
+1. **Estado inicial:**
+```
+X | O | X  
+O |   |  
+  |   |  
+```
+2. El algoritmo evalúa cada posible movimiento en profundidad 3.
+3. Retorna el movimiento con la mayor puntuación para el jugador actual.
+
+---
+
+### **4. Minimax con poda alfa-beta**
+Este método optimiza la búsqueda descartando ramas innecesarias cuando `β ≤ α`.
+
+```cpp
+int Minimax::minimaxComPoda(Nodo& nodo, const Tablero& estado, int profundidad, bool esMaximizador, int alfa, int beta) {
+    if (profundidad == 0 || estado.verificarGanador() != ' ') {
+        return evaluar(estado, nodo.jugador);
+    }
+
+    int mejorPuntuacion = esMaximizador ? numeric_limits<int>::min() : numeric_limits<int>::max();
+    auto coordenadas = estado.obtenerCoordenadasDisponibles();
+
+    for (const auto& coordenada : coordenadas) {
+        Tablero nuevoEstado = estado;
+        nuevoEstado.realizarMovimiento(coordenada.first, coordenada.second, nodo.jugador);
+
+        Nodo nuevoNodo(coordenadas, nodo.jugador == 'X' ? 'O' : 'X');
+        int puntuacion = minimaxComPoda(nuevoNodo, nuevoEstado, profundidad - 1, !esMaximizador, alfa, beta);
+
+        if (esMaximizador) {
+            mejorPuntuacion = max(mejorPuntuacion, puntuacion);
+            alfa = max(alfa, mejorPuntuacion);
+        } else {
+            mejorPuntuacion = min(mejorPuntuacion, puntuacion);
+            beta = min(beta, mejorPuntuacion);
+        }
+
+        if (beta <= alfa) break; // Se descarta esta rama.
+    }
+
+    return mejorPuntuacion;
+}
+```
+
+#### **Ejemplo:**
+1. **Estado inicial:**
+```
+X | O | X  
+O |   |  
+  |   |  
+```
+2. La poda ocurre si el oponente tiene una estrategia que asegura un mejor resultado sin explorar más.
+
+---
+
+### **5. Encontrar el mejor movimiento**
+Ambas versiones (`sin poda` y `con poda`) determinan el mejor movimiento.
+
+#### **Sin poda:**
+```cpp
+pair<int, int> Minimax::encontrarMejorMovimientoSinPoda(Tablero& tablero, char jugador) {
+    auto inicio = high_resolution_clock::now();
+    // Lógica para calcular el mejor movimiento.
+    auto fin = high_resolution_clock::now();
+    cout << "Tiempo de ejecucion (sin poda): " << duration_cast<milliseconds>(fin - inicio).count() << " ms\n";
+    return mejorMovimiento;
+}
+```
+
+#### **Con poda:**
+```cpp
+pair<int, int> Minimax::encontrarMejorMovimientoComPoda(Tablero& tablero, char jugador) {
+    auto inicio = high_resolution_clock::now();
+    // Lógica para calcular el mejor movimiento con poda.
+    auto fin = high_resolution_clock::now();
+    cout << "Tiempo de ejecucion (con poda): " << duration_cast<milliseconds>(fin - inicio).count() << " ms\n";
+    return mejorMovimiento;
+}
+```
+
+### **Resultados esperados**
+#### **Sin poda:**
+
+![sin-poda.png](image/sin-poda.png)
+
+- Tiempo de ejecución: **9 ms** (depende de la complejidad).
+#### **Con poda:**
+
+![con-poda.png](image/con-poda.png)
+
+- Tiempo de ejecución: **2 ms** (mayor eficiencia).
 
 ### **Comparativa**
 
