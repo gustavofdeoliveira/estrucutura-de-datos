@@ -94,13 +94,9 @@ Dado a estrutura de seus arquivos no diretório que você enviou, o comando deve
 
 Para ajustar y mejorar la explicación de los tiempos de ejecución al incluir las imágenes y estructurar mejor el contenido, podríamos hacerlo así:
 
----
-
 ## **Explicaciones sobre el algoritmo utilizado**
 
 En esta sección, se analiza en detalle el uso del algoritmo **Minimax**, con y sin **poda alfa-beta**, en el contexto del **Juego del Gato**. Exploramos su funcionamiento, implementación y cómo las optimizaciones impactan en el tiempo de ejecución.
-
----
 
 ### **Principios generales del algoritmo Minimax**
 
@@ -111,8 +107,6 @@ El algoritmo **Minimax** es ampliamente utilizado en juegos de dos jugadores alt
 En un tablero como el del Tic-Tac-Toe, el algoritmo evalúa exhaustivamente todas las combinaciones posibles de movimientos desde el estado inicial hasta un estado terminal (victoria, empate o derrota). Este proceso genera un árbol de decisiones, donde:
 - El **Maximizador (`X`)** selecciona el movimiento con el mayor puntaje.
 - El **Minimizador (`O`)** selecciona el movimiento con el menor puntaje.
-
----
 
 ### **1. Minimax sin poda alfa-beta**
 
