@@ -104,7 +104,7 @@ En un tablero como el del Tic-Tac-Toe, el algoritmo evalúa exhaustivamente toda
 - El **Maximizador (`X`)** selecciona el movimiento con el mayor puntaje.
 - El **Minimizador (`O`)** selecciona el movimiento con el menor puntaje.
 
-### **1. Minimax sin poda alfa-beta**
+### **Minimax sin poda alfa-beta**
 
 Cuando se implementa el algoritmo sin optimizaciones, se evalúan **todas** las ramas posibles del árbol de decisiones, lo que puede ser ineficiente para juegos con alta complejidad. Sin embargo, en juegos pequeños como el Tic-Tac-Toe, aún es manejable, aunque relativamente más lento.
 
@@ -119,7 +119,7 @@ Cuando se implementa el algoritmo sin optimizaciones, se evalúan **todas** las 
 
 ![Sin poda alfa-beta](image/sin-poda.png)
 
-### **2. Minimax con poda alfa-beta**
+### **Minimax con poda alfa-beta**
 
 La **poda alfa-beta** es una mejora significativa al algoritmo Minimax. Permite descartar ramas del árbol de búsqueda que no pueden mejorar el resultado actual. Utiliza dos parámetros clave:
 - **Alfa (`α`):** El mejor puntaje conocido para el Maximizador hasta el momento.
@@ -161,7 +161,7 @@ Inicio (X)
 El jugador `X` tiene varias opciones (A, B, C) al inicio. Cada una lleva a una secuencia de movimientos diferentes.
 
 ```
-X juega en la posición A:
+X juega en la posición A (0-0):
        ┌───┬───┬───┐
        │ X │   │   │
        └───┼───┼───┘
@@ -169,7 +169,7 @@ X juega en la posición A:
 
 #### Opciones del oponente (`O`) luego de `X` elige la posición A:
 ```
-O juega en la posición D:
+O juega en la posición D (1-1):
        ┌───┬───┬───┐
        │ X │   │   │
        └───┼───┼───┘
