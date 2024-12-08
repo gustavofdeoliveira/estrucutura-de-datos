@@ -340,13 +340,21 @@ Con este método, se reduce el número de nodos evaluados, optimizando así la b
 
 ## **Instrucciones para ejecutar**
 
+### GCC
+
 1. Asegúrate de tener un compilador C++ instalado (como `g++`).
 2. Compila el programa con:
    ```bash
-   g++ -o minimax main.cpp model/tablero/Tablero.cpp model/nodo/Nodo.cpp model/minimax/Minimax.cpp
+   g++ -o minimax src/main.cpp src/model/tablero/Tablero.cpp src/model/minimax/Minimax.cpp
    ```
 
 3. Ejecuta el programa:
    ```bash
    ./minimax
    ```
+   
+### Dockerfile
+1. Construir la imagen Docker: Utiliza el siguiente comando para crear la imagen basada en el Dockerfile:
+`docker build -t taller-ubuntu .`
+
+2. Ejecutar el contenedor: Una vez que la imagen ha sido construida exitosamente, inicia el contenedor con: `docker run -it taller-ubuntu`
