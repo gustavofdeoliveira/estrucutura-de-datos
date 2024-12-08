@@ -118,7 +118,6 @@ O |   | X
 - **Jugador:** `X`
 - Resultado: `1` (El jugador `X` ganó).
 
----
 
 ### **2. Construcción del árbol de posibilidades**
 La función `construirArbol` genera todas las posibles combinaciones de movimientos hasta una profundidad dada.
@@ -149,8 +148,6 @@ O |   |
 ```
 - **Movimiento disponible:** `(1, 1)`
 - El árbol generará posibles tableros con combinaciones a partir de este estado.
-
----
 
 ### **3. Minimax sin poda alfa-beta**
 Este método explora **todas** las ramas posibles para encontrar el mejor movimiento.
@@ -191,8 +188,6 @@ O |   |
 ```
 2. El algoritmo evalúa cada posible movimiento en profundidad 3.
 3. Retorna el movimiento con la mayor puntuación para el jugador actual.
-
----
 
 ### **4. Minimax con poda alfa-beta**
 Este método optimiza la búsqueda descartando ramas innecesarias cuando `β ≤ α`.
@@ -237,8 +232,6 @@ O |   |
 ```
 2. La poda ocurre si el oponente tiene una estrategia que asegura un mejor resultado sin explorar más.
 
----
-
 ### **5. Encontrar el mejor movimiento**
 Ambas versiones (`sin poda` y `con poda`) determinan el mejor movimiento.
 
@@ -264,7 +257,7 @@ pair<int, int> Minimax::encontrarMejorMovimientoComPoda(Tablero& tablero, char j
 }
 ```
 
-### **Resultados esperados**
+### **6. Resultados esperados**
 #### **Sin poda:**
 
 ![sin-poda.png](image/sin-poda.png)
@@ -276,7 +269,7 @@ pair<int, int> Minimax::encontrarMejorMovimientoComPoda(Tablero& tablero, char j
 
 - Tiempo de ejecución: **2 ms** (mayor eficiencia).
 
-### **Comparativa**
+### **7. Comparativa**
 
 | **Método**            | **Tiempo de Ejecución** | **Eficiencia**        |
 |------------------------|-------------------------|------------------------|
