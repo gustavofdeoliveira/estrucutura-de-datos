@@ -97,8 +97,8 @@ En esta sección, se analiza en detalle el uso del algoritmo **Minimax**, con y 
 ### **Principios generales del algoritmo Minimax**
 
 El algoritmo **Minimax** es ampliamente utilizado en juegos de dos jugadores alternos que buscan:
-- **Maximizar** el puntaje del jugador activo (generalmente, `X`).
-- **Minimizar** las posibilidades de éxito del oponente (generalmente, `O`).
+- **Maximizar** el puntaje del jugador activo (`X`).
+- **Minimizar** las posibilidades de éxito del oponente (`O`).
 
 En un tablero como el del Tic-Tac-Toe, el algoritmo evalúa exhaustivamente todas las combinaciones posibles de movimientos desde el estado inicial hasta un estado terminal (victoria, empate o derrota). Este proceso genera un árbol de decisiones, donde:
 - El **Maximizador (`X`)** selecciona el movimiento con el mayor puntaje.
