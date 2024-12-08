@@ -262,7 +262,7 @@ pair<int, int> Minimax::encontrarMejorMovimientoComPoda(Tablero& tablero, char j
 
 ![sin-poda.png](image/sin-poda.png)
 
-- Tiempo de ejecución: **9 ms** (depende de la complejidad).
+- Tiempo de ejecución: **9 ms** (depende de la complejidad de la jugada).
 #### **Con poda:**
 
 ![con-poda.png](image/con-poda.png)
