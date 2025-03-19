@@ -1,0 +1,19 @@
+name: Workflow Manual com Inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+      ambiente:
+        description: 'Escolha o ambiente (dev, staging, prod)'
+        required: true
+        default: 'dev'
+      versao:
+        description: 'Informe a versão'
+        required: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exibir valores
+        run: echo `Ambiente: ${{ github.event.inputs.ambiente }}, Versão: ${{ github.event.inputs.versao }}`
