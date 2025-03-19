@@ -1,19 +1,20 @@
-name: Workflow Manual com Inputs
+name: Basic Workflow Dispatch Example
 
 on:
   workflow_dispatch:
     inputs:
-      ambiente:
-        description: 'Escolha o ambiente (dev, staging, prod)'
+      environment:
+        description: 'The environment to deploy to'
         required: true
-        default: 'dev'
-      versao:
-        description: 'Informe a versão'
-        required: false
+        default: 'production'
+
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Exibir valores
-        run: echo `Ambiente: ${{ github.event.inputs.ambiente }}, Versão: ${{ github.event.inputs.versao }}`
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Deploy
+        run: echo "Deploying to ${{ github.event.inputs.environment }} environment"
